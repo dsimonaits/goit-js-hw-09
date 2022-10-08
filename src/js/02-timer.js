@@ -3,7 +3,10 @@ import 'flatpickr/dist/flatpickr.min.css';
 import Notiflix from 'notiflix';
 import 'notiflix/dist/notiflix-3.2.5.min.js';
 
-const options = {
+const btnStart = document.querySelector('[data-start]');
+btnStart.disabled = true;
+
+const fp = flatpickr('#datetime-picker', {
   enableTime: true,
   time_24hr: true,
   defaultDate: new Date(),
@@ -16,13 +19,7 @@ const options = {
       Notiflix.Notify.failure('Please choose a date in the future');
     }
   },
-};
-
-const fp = flatpickr('#datetime-picker', options);
-
-const btnStart = document.querySelector('[data-start]');
-
-btnStart.disabled = true;
+});
 
 btnStart.addEventListener('click', startTimer);
 
@@ -36,6 +33,8 @@ function startTimer() {
 class CountdownTimer {
   constructor({ selector, targetDate }) {
     this.targetDate = targetDate;
+    this.timer = document.querySelector('.timer');
+    this.timerFields = document.querySelector('.field');
     this.daysSpan = document.querySelector(`${selector} [data-days]`);
     this.hoursSpan = document.querySelector(`${selector} [data-hours]`);
     this.minsSpan = document.querySelector(`${selector} [data-minutes]`);
@@ -44,7 +43,7 @@ class CountdownTimer {
   }
 
   updateTimer() {
-    setInterval(() => {
+    const timerId = setInterval(() => {
       const currentTime = Date.now();
       const delta = this.targetDate - currentTime;
       const { days, hours, minutes, seconds } = this.convertMs(delta);
@@ -52,6 +51,12 @@ class CountdownTimer {
       this.hoursSpan.textContent = this.addLeadingZero(hours);
       this.minsSpan.textContent = this.addLeadingZero(minutes);
       this.secsSpan.textContent = this.addLeadingZero(seconds);
+
+      setTimeout(() => {
+        if (this.secsSpan.textContent === '00') {
+          clearInterval(timerId);
+        }
+      });
     }, 1000);
   }
 

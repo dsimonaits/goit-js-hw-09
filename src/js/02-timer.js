@@ -4,7 +4,23 @@ import Notiflix from 'notiflix';
 import 'notiflix/dist/notiflix-3.2.5.min.js';
 
 const btnStart = document.querySelector('[data-start]');
+const timerFieldRef = document.querySelectorAll('.field');
+const dateInputRef = document.querySelector('#datetime-picker');
 btnStart.disabled = true;
+
+for (field of timerFieldRef) {
+  field.parentElement.style.fontSize = '20px';
+  field.parentElement.style.display = 'flex';
+  field.parentElement.style.justifyContent = 'center';
+  field.parentElement.style.marginTop = '20px';
+  field.parentElement.style.gap = '30px';
+
+  field.style.display = 'flex';
+  field.style.flexDirection = 'column';
+  field.style.alignItems = 'center';
+  field.firstElementChild.style.fontSize = '40px';
+  field.lastElementChild.style.textTransform = 'uppercase';
+}
 
 const fp = flatpickr('#datetime-picker', {
   enableTime: true,
@@ -24,6 +40,8 @@ const fp = flatpickr('#datetime-picker', {
 btnStart.addEventListener('click', startTimer);
 
 function startTimer() {
+  dateInputRef.disabled = true;
+  btnStart.disabled = true;
   new CountdownTimer({
     selector: '.timer',
     targetDate: fp.selectedDates[0],
@@ -33,8 +51,6 @@ function startTimer() {
 class CountdownTimer {
   constructor({ selector, targetDate }) {
     this.targetDate = targetDate;
-    this.timer = document.querySelector('.timer');
-    this.timerFields = document.querySelector('.field');
     this.daysSpan = document.querySelector(`${selector} [data-days]`);
     this.hoursSpan = document.querySelector(`${selector} [data-hours]`);
     this.minsSpan = document.querySelector(`${selector} [data-minutes]`);
@@ -53,8 +69,15 @@ class CountdownTimer {
       this.secsSpan.textContent = this.addLeadingZero(seconds);
 
       setTimeout(() => {
-        if (this.secsSpan.textContent === '00') {
+        if (
+          this.daysSpan.textContent &&
+          this.hoursSpan.textContent &&
+          this.minsSpan.textContent &&
+          this.secsSpan.textContent === '00'
+        ) {
           clearInterval(timerId);
+          dateInputRef.disabled = false;
+          Notiflix.Notify.success('The date has come!');
         }
       });
     }, 1000);

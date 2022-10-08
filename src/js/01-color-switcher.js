@@ -16,6 +16,7 @@ const randomBackgroundColor = {
     refs.btnStart.addEventListener('click', () => {
       refs.btnStart.disabled = true;
       refs.btnStop.disabled = false;
+      refs.body.style.backgroundColor = this.getRandomHexColor();
 
       this.intervalID = setInterval(() => {
         refs.body.style.backgroundColor = this.getRandomHexColor();

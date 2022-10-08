@@ -8,7 +8,7 @@ const timerFieldRef = document.querySelectorAll('.field');
 const dateInputRef = document.querySelector('#datetime-picker');
 btnStart.disabled = true;
 
-for (field of timerFieldRef) {
+for (let field of timerFieldRef) {
   field.parentElement.style.fontSize = '20px';
   field.parentElement.style.display = 'flex';
   field.parentElement.style.justifyContent = 'center';

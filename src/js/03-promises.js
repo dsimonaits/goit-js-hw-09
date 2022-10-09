@@ -7,9 +7,9 @@ formRef.addEventListener('submit', createPromises);
 
 function createPromises(e) {
   e.preventDefault();
-  const amount = e.target.elements.amount.value;
-  const step = Number(e.target.elements.step.value);
-  let delay = Number(e.target.elements.delay.value);
+  const amount = e.target.amount.value;
+  const step = Number(e.target.step.value);
+  let delay = Number(e.target.delay.value);
   let position = 1;
 
   const intervalID = setInterval(() => {

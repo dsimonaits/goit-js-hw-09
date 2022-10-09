@@ -28,7 +28,6 @@ const fp = flatpickr('#datetime-picker', {
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-    console.log(selectedDates[0]);
     if (this.selectedDates[0] > new Date()) {
       btnStart.disabled = false;
     } else {
@@ -70,19 +69,17 @@ class CountdownTimer {
       this.minsSpan.textContent = this.addLeadingZero(minutes);
       this.secsSpan.textContent = this.addLeadingZero(seconds);
 
-      setTimeout(() => {
-        if (
-          this.daysSpan.textContent === '00' &&
-          this.hoursSpan.textContent === '00' &&
-          this.minsSpan.textContent === '00' &&
-          this.secsSpan.textContent === '00'
-        ) {
-          clearInterval(timerId);
-          dateInputRef.disabled = false;
-          btnStart.style.touchAction = 'auto';
-          Notiflix.Notify.success('The date has come!');
-        }
-      });
+      if (
+        this.daysSpan.textContent === '00' &&
+        this.hoursSpan.textContent === '00' &&
+        this.minsSpan.textContent === '00' &&
+        this.secsSpan.textContent === '00'
+      ) {
+        clearInterval(timerId);
+        dateInputRef.disabled = false;
+        btnStart.style.touchAction = 'auto';
+        Notiflix.Notify.success('The date has come!');
+      }
     }, 1000);
   }
 

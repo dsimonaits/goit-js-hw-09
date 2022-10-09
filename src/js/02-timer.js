@@ -42,6 +42,7 @@ btnStart.addEventListener('click', startTimer);
 function startTimer() {
   dateInputRef.disabled = true;
   btnStart.disabled = true;
+  btnStart.style.touchAction = 'none';
   new CountdownTimer({
     selector: '.timer',
     targetDate: fp.selectedDates[0],
@@ -77,6 +78,7 @@ class CountdownTimer {
         ) {
           clearInterval(timerId);
           dateInputRef.disabled = false;
+          btnStart.style.touchAction = 'auto';
           Notiflix.Notify.success('The date has come!');
         }
       });

@@ -13,7 +13,7 @@ for (let field of timerFieldRef) {
   field.parentElement.style.display = 'flex';
   field.parentElement.style.justifyContent = 'center';
   field.parentElement.style.marginTop = '20px';
-  field.parentElement.style.gap = '30px';
+  field.parentElement.style.gap = '20px';
 
   field.style.display = 'flex';
   field.style.flexDirection = 'column';

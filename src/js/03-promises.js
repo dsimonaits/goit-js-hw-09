@@ -1,39 +1,21 @@
 import Notiflix from 'notiflix';
 import 'notiflix/dist/notiflix-3.2.5.min.js';
 
-const refs = {
-  form: document.querySelector('.form'),
-  delay: document.querySelector('[name=delay]'),
-  delayStep: document.querySelector('[name=step]'),
-  amount: document.querySelector('[name=amount]'),
-};
+const formRef = document.querySelector('.form');
 
-const promiseData = { delay: 0, step: 0, amount: 0 };
-
-let position = 0;
-
-refs.form.addEventListener('input', onFormInput);
-
-refs.form.addEventListener('submit', createPromises);
-
-function onFormInput(e) {
-  promiseData[e.target.name] = e.target.value;
-}
+formRef.addEventListener('submit', createPromises);
 
 function createPromises(e) {
   e.preventDefault();
-  position = 1;
-  let { delay, step, amount } = promiseData;
-  createPromise(position, delay)
-    .then(({ position, delay }) => {
-      Notiflix.Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
-    })
-    .catch(({ position, delay }) => {
-      Notiflix.Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
-    });
-  for (let i = 1; i < amount; i++) {
-    position += 1;
-    delay = Number(delay) + Number(step);
+  const amount = e.target.elements.amount.value;
+  const step = Number(e.target.elements.step.value);
+  let delay = Number(e.target.elements.delay.value);
+  let position = 1;
+
+  const intervalID = setInterval(() => {
+    if (position >= amount) {
+      clearInterval(intervalID);
+    }
     createPromise(position, delay)
       .then(({ position, delay }) => {
         Notiflix.Notify.success(
@@ -45,7 +27,9 @@ function createPromises(e) {
           `❌ Rejected promise ${position} in ${delay}ms`
         );
       });
-  }
+    position += 1;
+    delay += step;
+  });
 }
 
 function createPromise(position, delay) {

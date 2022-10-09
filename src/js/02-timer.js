@@ -42,7 +42,6 @@ btnStart.addEventListener('click', startTimer);
 
 function startTimer() {
   dateInputRef.disabled = true;
-  dateInputRef.readonly = true;
   btnStart.disabled = true;
   btnStart.style.touchAction = 'none';
   new CountdownTimer({

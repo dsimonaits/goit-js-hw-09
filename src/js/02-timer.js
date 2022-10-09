@@ -28,6 +28,7 @@ const fp = flatpickr('#datetime-picker', {
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
+    console.log(selectedDates[0]);
     if (this.selectedDates[0] > new Date()) {
       btnStart.disabled = false;
     } else {
@@ -41,6 +42,7 @@ btnStart.addEventListener('click', startTimer);
 
 function startTimer() {
   dateInputRef.disabled = true;
+  dateInputRef.readonly = true;
   btnStart.disabled = true;
   btnStart.style.touchAction = 'none';
   new CountdownTimer({

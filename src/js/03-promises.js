@@ -1,6 +1,5 @@
 import Notiflix from 'notiflix';
 import 'notiflix/dist/notiflix-3.2.5.min.js';
-import throttle from 'lodash.throttle';
 
 const refs = {
   form: document.querySelector('.form'),

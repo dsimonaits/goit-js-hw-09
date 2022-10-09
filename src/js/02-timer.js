@@ -71,9 +71,9 @@ class CountdownTimer {
 
       setTimeout(() => {
         if (
-          this.daysSpan.textContent &&
-          this.hoursSpan.textContent &&
-          this.minsSpan.textContent &&
+          this.daysSpan.textContent === '00' &&
+          this.hoursSpan.textContent === '00' &&
+          this.minsSpan.textContent === '00' &&
           this.secsSpan.textContent === '00'
         ) {
           clearInterval(timerId);

@@ -63,23 +63,19 @@ class CountdownTimer {
     const timerId = setInterval(() => {
       const currentTime = Date.now();
       const delta = this.targetDate - currentTime;
-      const { days, hours, minutes, seconds } = this.convertMs(delta);
-      this.daysSpan.textContent = this.addLeadingZero(days);
-      this.hoursSpan.textContent = this.addLeadingZero(hours);
-      this.minsSpan.textContent = this.addLeadingZero(minutes);
-      this.secsSpan.textContent = this.addLeadingZero(seconds);
-
-      if (
-        this.daysSpan.textContent === '00' &&
-        this.hoursSpan.textContent === '00' &&
-        this.minsSpan.textContent === '00' &&
-        this.secsSpan.textContent === '00'
-      ) {
+      console.log(delta);
+      if (delta <= 1000) {
         clearInterval(timerId);
         dateInputRef.disabled = false;
         btnStart.style.touchAction = 'auto';
         Notiflix.Notify.success('The date has come!');
       }
+
+      const { days, hours, minutes, seconds } = this.convertMs(delta);
+      this.daysSpan.textContent = this.addLeadingZero(days);
+      this.hoursSpan.textContent = this.addLeadingZero(hours);
+      this.minsSpan.textContent = this.addLeadingZero(minutes);
+      this.secsSpan.textContent = this.addLeadingZero(seconds);
     }, 1000);
   }
 

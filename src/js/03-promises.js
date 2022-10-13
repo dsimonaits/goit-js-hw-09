@@ -26,6 +26,9 @@ function createPromises(e) {
         Notiflix.Notify.failure(
           `❌ Rejected promise ${position} in ${delay}ms`
         );
+      })
+      .finally(() => {
+        formRef.reset();
       });
     position += 1;
     delay += step;
